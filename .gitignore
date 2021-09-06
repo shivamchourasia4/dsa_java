@@ -1,0 +1,14 @@
+#Ignore
+bin/
+.classpath
+.project
+*.class
+.settings
+.metadata
+.idea
+*.iws
+*.iml
+*.ipr
+CodePairing/
+CP/
+

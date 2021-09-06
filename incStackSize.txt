@@ -1,0 +1,59 @@
+This is how I do every problem that involves deep recursion.
+
+public class Example implements Runnable {
+     public static void main(String[] args) {
+         new Thread(null, new Example(), "whatever", 1<<26).start();
+     }
+
+     public void run() {
+        // Do whatever you want in this function instead of main
+     }
+
+//-----------------------------------------Need to test this
+import java.io.*;
+import java.util.*;
+import java.lang.Math;
+class Solution {
+    static int mx = 999999;
+    public static int solve(int a[], int i, int j, int sum,Integer[][] t){
+        
+        if(i>=a.length||j<0){
+            return mx;
+        }
+        if(t[i][j]!=null){
+            return t[i][j];
+        }
+        if(sum==0){
+            return t[i][j]=0;
+        }
+        if(sum<0){
+            return t[i][j]=mx;
+        }
+        return t[i][j] =  1+Math.min(solve(a,i+1,j, sum-a[i],t), solve(a, i, j-1, sum-a[j],t));
+    }
+    
+    public static int minimumWithdrawal(int[] ATM,int X){
+        Integer[][] t = new Integer[ATM.length+1][ATM.length+1];
+        int ans =  solve(ATM, 0, ATM.length-1, X,t);
+        if(ans>=mx){
+            return -1;
+        }
+        return ans;
+        
+    }
+
+    public static void main(String[] args){
+        Scanner scan = new Scanner(System.in);
+        int N;
+        N=scan.nextInt();
+        int[] ATM = new int[N];
+        for(int j=0;j<N;j++){
+            ATM[j]=scan.nextInt();
+        }
+        int X;
+        X=scan.nextInt();
+        int result;
+        result = minimumWithdrawal(ATM,X);
+        System.out.print(result);
+    }
+}
